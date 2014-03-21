@@ -1,0 +1,43 @@
+# depslib dependency file v1.0
+1395208686 source:c:\project\xout\event.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	<string>
+
+1395210872 source:c:\project\xout\lesson06.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	<string>
+
+1395238723 source:c:\project\xout\lesson07.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_ttf.h"
+	<string>
+
+1395247134 source:c:\project\xout\lesson11.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_ttf.h"
+	"SDL/SDL_mixer.h"
+	<string>
+
+1395291722 source:c:\project\xout\lesson13.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_ttf.h"
+	<string>
+	<sstream>
+
+1395366599 source:c:\project\xout\lesson14.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_ttf.h"
+	<string>
+
+1395369222 source:c:\project\xout\lesson15.cpp
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	<string>
+	<sstream>
+
