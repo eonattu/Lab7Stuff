@@ -1,5 +1,9 @@
-/*This source code copyrighted by Lazy Foo' Productions (2004-2013)
-and may not be redistributed without written permission.*/
+/*
+Edwin Onattu
+Deliverable for lab 7.
+This program allows the user to move a
+football player around within the bounds of a window.
+*/
 
 //The headers
 #include "SDL/SDL.h"
@@ -12,40 +16,40 @@ const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 
 //The frame rate
-const int FRAMES_PER_SECOND = 20;
+const int FRAMES_PER_SECOND = 50;
 
-//The dimensions of the dot
-const int DOT_WIDTH = 20;
-const int DOT_HEIGHT = 20;
+//The dimensions of the player
+const int PLAYER_WIDTH = 95;
+const int PLAYER_HEIGHT = 160;
 
 //The surfaces
-SDL_Surface *dot = NULL;
+SDL_Surface *player = NULL;
 SDL_Surface *screen = NULL;
 
 //The event structure
 SDL_Event event;
 
-//The dot that will move around on the screen
-class Dot
+//The player that will move around on the screen
+class Player
 {
     private:
-    //The X and Y offsets of the dot
+    //The X and Y offsets of the player
     int x, y;
 
-    //The velocity of the dot
+    //The velocity of the player
     int xVel, yVel;
 
     public:
     //Initializes the variables
-    Dot();
+    Player();
 
-    //Takes key presses and adjusts the dot's velocity
+    //Takes key presses and adjusts the player's velocity
     void handle_input();
 
-    //Moves the dot
+    //Moves the player
     void move();
 
-    //Shows the dot on the screen
+    //Shows the player on the screen
     void show();
 };
 
@@ -144,7 +148,7 @@ bool init()
     }
 
     //Set the window caption
-    SDL_WM_SetCaption( "Move the Dot", NULL );
+    SDL_WM_SetCaption( "Move the Player", NULL );
 
     //If everything initialized fine
     return true;
@@ -152,11 +156,11 @@ bool init()
 
 bool load_files()
 {
-    //Load the dot image
-    dot = load_image( "player.bmp" );
+    //Load the Player image
+    player = load_image( "player.bmp" );
 
-    //If there was a problem in loading the dot
-    if( dot == NULL )
+    //If there was a problem in loading the player
+    if( player == NULL )
     {
         return false;
     }
@@ -168,13 +172,13 @@ bool load_files()
 void clean_up()
 {
     //Free the surface
-    SDL_FreeSurface( dot );
+    SDL_FreeSurface( player );
 
     //Quit SDL
     SDL_Quit();
 }
 
-Dot::Dot()
+Player::Player()
 {
     //Initialize the offsets
     x = 0;
@@ -185,7 +189,7 @@ Dot::Dot()
     yVel = 0;
 }
 
-void Dot::handle_input()
+void Player::handle_input()
 {
     //If a key was pressed
     if( event.type == SDL_KEYDOWN )
@@ -193,10 +197,10 @@ void Dot::handle_input()
         //Adjust the velocity
         switch( event.key.keysym.sym )
         {
-            case SDLK_UP: yVel -= DOT_HEIGHT / 2; break;
-            case SDLK_DOWN: yVel += DOT_HEIGHT / 2; break;
-            case SDLK_LEFT: xVel -= DOT_WIDTH / 2; break;
-            case SDLK_RIGHT: xVel += DOT_WIDTH / 2; break;
+            case SDLK_UP: yVel -= PLAYER_HEIGHT / 2; break;
+            case SDLK_DOWN: yVel += PLAYER_HEIGHT / 2; break;
+            case SDLK_LEFT: xVel -= PLAYER_WIDTH / 2; break;
+            case SDLK_RIGHT: xVel += PLAYER_WIDTH / 2; break;
         }
     }
     //If a key was released
@@ -205,41 +209,41 @@ void Dot::handle_input()
         //Adjust the velocity
         switch( event.key.keysym.sym )
         {
-            case SDLK_UP: yVel += DOT_HEIGHT / 2; break;
-            case SDLK_DOWN: yVel -= DOT_HEIGHT / 2; break;
-            case SDLK_LEFT: xVel += DOT_WIDTH / 2; break;
-            case SDLK_RIGHT: xVel -= DOT_WIDTH / 2; break;
+            case SDLK_UP: yVel += PLAYER_HEIGHT / 2; break;
+            case SDLK_DOWN: yVel -= PLAYER_HEIGHT / 2; break;
+            case SDLK_LEFT: xVel += PLAYER_WIDTH / 2; break;
+            case SDLK_RIGHT: xVel -= PLAYER_WIDTH / 2; break;
         }
     }
 }
 
-void Dot::move()
+void Player::move()
 {
-    //Move the dot left or right
+    //Move the player left or right
     x += xVel;
 
-    //If the dot went too far to the left or right
-    if( ( x < 0 ) || ( x + DOT_WIDTH > SCREEN_WIDTH ) )
+    //If the player went too far to the left or right
+    if( ( x < 0 ) || ( x + PLAYER_WIDTH > SCREEN_WIDTH ) )
     {
         //move back
         x -= xVel;
     }
 
-    //Move the dot up or down
+    //Move the player up or down
     y += yVel;
 
-    //If the dot went too far up or down
-    if( ( y < 0 ) || ( y + DOT_HEIGHT > SCREEN_HEIGHT ) )
+    //If the player went too far up or down
+    if( ( y < 0 ) || ( y + PLAYER_HEIGHT > SCREEN_HEIGHT ) )
     {
         //move back
         y -= yVel;
     }
 }
 
-void Dot::show()
+void Player::show()
 {
-    //Show the dot
-    apply_surface( x, y, dot, screen );
+    //Show the player
+    apply_surface( x, y, player, screen );
 }
 
 Timer::Timer()
@@ -338,8 +342,8 @@ int main( int argc, char* args[] )
     //Quit flag
     bool quit = false;
 
-    //The dot that will be used
-    Dot myDot;
+    //The Player that will be used
+    Player player1;
 
     //The frame rate regulator
     Timer fps;
@@ -365,8 +369,8 @@ int main( int argc, char* args[] )
         //While there's events to handle
         while( SDL_PollEvent( &event ) )
         {
-            //Handle events for the dot
-            myDot.handle_input();
+            //Handle events for the player
+            player1.handle_input();
 
             //If the user has Xed out the window
             if( event.type == SDL_QUIT )
@@ -376,14 +380,14 @@ int main( int argc, char* args[] )
             }
         }
 
-        //Move the dot
-        myDot.move();
+        //Move the player
+        player1.move();
 
         //Fill the screen white
         SDL_FillRect( screen, &screen->clip_rect, SDL_MapRGB( screen->format, 0xFF, 0xFF, 0xFF ) );
 
-        //Show the dot on the screen
-        myDot.show();
+        //Show the player on the screen
+        player1.show();
 
         //Update the screen
         if( SDL_Flip( screen ) == -1 )
